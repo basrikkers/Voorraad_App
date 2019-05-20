@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema voorraad
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema voorraad
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `voorraad` DEFAULT CHARACTER SET utf8 ;
+USE `voorraad` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Store`
+-- Table `voorraad`.`Store`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Store` (
+CREATE TABLE IF NOT EXISTS `voorraad`.`Store` (
   `ID` VARCHAR(45) NOT NULL,
   `txt_fullname` VARCHAR(45) NULL,
   PRIMARY KEY (`ID`))
@@ -28,9 +28,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Product`
+-- Table `voorraad`.`Product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Product` (
+CREATE TABLE IF NOT EXISTS `voorraad`.`Product` (
   `productID` INT NOT NULL,
   `storeID` VARCHAR(45) NOT NULL,
   `txt_name` VARCHAR(45) NULL,
@@ -41,16 +41,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Product` (
   INDEX `StoreID_idx` (`storeID` ASC),
   CONSTRAINT `StoreID`
     FOREIGN KEY (`storeID`)
-    REFERENCES `mydb`.`Store` (`ID`)
+    REFERENCES `voorraad`.`Store` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Login`
+-- Table `voorraad`.`Login`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Login` (
+CREATE TABLE IF NOT EXISTS `voorraad`.`Login` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `txt_username` VARCHAR(45) NOT NULL,
   `txt_password` VARCHAR(45) NOT NULL,
@@ -61,9 +61,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`User`
+-- Table `voorraad`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User` (
+CREATE TABLE IF NOT EXISTS `voorraad`.`User` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `txt_firstname` VARCHAR(45) NULL,
   `txt_lastname` VARCHAR(45) NULL,
@@ -74,16 +74,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   CONSTRAINT `LoginId`
     FOREIGN KEY (`loginID`)
-    REFERENCES `mydb`.`Login` (`ID`)
+    REFERENCES `voorraad`.`Login` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`UserProduct`
+-- Table `voorraad`.`UserProduct`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`UserProduct` (
+CREATE TABLE IF NOT EXISTS `voorraad`.`UserProduct` (
   `UserID` INT NOT NULL,
   `ProductID` INT NOT NULL,
   `StoreID` VARCHAR(45) NOT NULL,
@@ -92,12 +92,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`UserProduct` (
   INDEX `ProductID_idx` (`ProductID` ASC, `StoreID` ASC),
   CONSTRAINT `UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `mydb`.`User` (`ID`)
+    REFERENCES `voorraad`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `ProductID`
     FOREIGN KEY (`ProductID` , `StoreID`)
-    REFERENCES `mydb`.`Product` (`productID` , `storeID`)
+    REFERENCES `voorraad`.`Product` (`productID` , `storeID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
